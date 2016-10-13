@@ -1,2 +1,7 @@
 /* eslint-disable no-console */
-console.log('This is first Javascript file');
+import React from 'react'
+import {render} from 'react-dom';
+import App from './App'
+
+let app = document.getElementById('main')
+render(<App surname="soni"/>, app)
