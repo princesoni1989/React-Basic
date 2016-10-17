@@ -1,16 +1,12 @@
 import React from 'react'
-import Users from './Users'
+import {Form, FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap'
+import Courses from './component/courses'
+import {connect} from 'react-redux'
 require('./style.css')
 
 class App extends React.Component {
   constructor(){
     super()
-    this.state = {
-      name: 'Prince Soni',
-      users: ['pooja', 'arun', 'Rohit'],
-      count: 0,
-      showState: false
-    }
     this.incrementCount = this.incrementCount.bind(this)
   }
 
@@ -21,17 +17,24 @@ class App extends React.Component {
   }
 
   render() {
+    let {courses, surname, isFetching} = this.props
     return (
       <div >
-        <h2 id="appComp" className="userName"> This is App component {this.state.name}</h2>
-        <h1 > This is Count {this.state.count}</h1>
-        <h1 name={this.state.showState ? 'prince' : 'soni'}> This is surname {this.props.surname}</h1>
-        <button onClick={this.incrementCount}>Increament</button>
-        {this.state.showState ? <div> Congtz.....</div> : ''}
-        <Users users={this.state.users}/>
+        {isFetching ? <h1> Loading......</h1> : <Courses courses={courses}/>}
+
       </div>
     )
   }
 }
 
-export default App
+const mapStateToProps = (state, ownProps) => {
+  console.log("State>>>>>>>>>>", state)
+ return {
+   courses: state.courses,
+   surname: ownProps.surname,
+   isFetching: state.ajax
+ }
+}
+
+export default connect(mapStateToProps)(App)
+
